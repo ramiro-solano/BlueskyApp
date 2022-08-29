@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon2.svg" sizes="32x32" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="CSS/style.css" type="text/css" media="all">
+    <script defer src="js/main.js"></script>
+    <title>Bluesky</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <img src="img/logo.svg" alt="Bluesky" class="logo">
+        
+        <ul class="header-nav">
+            <li class="search-box">
+                <i class='bx bx-search icon'></i>
+                <input type="search" placeholder="Buscar...">
+            </li>
+        </ul>
+    </header>
+
+    <nav class="sidebar">
+        <div class="menu">
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-home-alt icon'></i>
+                        <span class="text text-nav">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bxs-file icon'></i>
+                        <span class="text text-nav">Factura</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+    </nav>
+
+    <main>
+        <section class="section-factura">
+                <h1 class="h1-factura">INFORME TÉCNICO</h1>
+                <h2 class="h2-factura">Buenos Aires 10 - Teléfono: 381350-5483 CUIT: 20287911263 </h2>
+                <h2 class="h2-factura">e-Mail: blueskyb1@gmail.com San Miguel de Tucuman - Tucuman </h2>
+                
+                <table>
+                    <tbody>
+                        <thead>
+                            <th colspan="2">Datos del cliente</th>
+                            <th colspan="2">Datos del equipo</th>
+                            <th colspan="2">Nr. de orden</th>
+                        </thead>
+                        <tr>
+                            <th>Titular:</th>
+                            <td><input type="text"></td>
+                            <th>Modelo:</th>
+                            <td><input type="text"></td>
+                            <td>0110</td>
+                        </tr>
+                        <tr>
+                            <th>Nro. de contacto:</th>
+                            <td><input type="text"></td>
+                            <th>Accesorios:</th>
+                            <td><select name="Opciones.." id="select-box">
+                                <option value="No">No</option>
+                                <option value="Si">Funda</option>
+                                </select>
+                            </td>
+                            <th>Fecha:</th>
+                            <td><input type="datetime-local"></td>
+                        </tr>
+                        <tr>
+                            <th>Direccion:</th>
+                            <td><input type="text"></td>
+                        </tr>
+                        <thead>
+                            <th colspan="2">Datos del Asesor</th>
+                            <th colspan="2">Peritaje</th>
+                            <th colspan="2">Fecha de entrega</th>
+                        </thead>
+                        <tr>
+                            <td><select name="Personal">
+                                <option value="Persona">Asesor</option>
+                                <option value="Persona">Lautaro Solano</option>
+                                <option value="Persona">Nicolar Solano</option>
+                                <option value="Persona">Ramiro Jr. Solano</option>
+                                <option value="Persona">Ramiro Solano</option>
+                            </select></td>
+                            <td></td>
+                            <td><input type="text"></td>
+                            <td></td>
+                            <td><select name="" id="">
+                                <option value="">A confirmar</option>
+                                <option value=""><input type="datetime-local"></option>
+                            </select></td>
+                        </tr>
+                        <thead>
+                            <th colspan="2">Datos de facturacion</th>
+                        </thead>
+                        <tr>
+                            <th>Costo aprobado</th>
+                            <td><input type="text"></td>
+                            <th>Modalidad de pago</th>
+                            <td><select name="Modalidad de pago">
+                                <option value="">Transferecia bancaria</option>
+                                <option value="">Efectivo</option>
+                            </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input class="button-print" type="button" value="Imprimir Factura" onclick="imprimirFactura()">
+        </section>
+    </main>
+</div>
+</body>
+</html>
