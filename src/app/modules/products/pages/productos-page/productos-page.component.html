@@ -1,0 +1,22 @@
+<div class="h-screen w-full text-neutral-800 sm:px-10">
+    <h1 class="text-xl px-3 dark:text-white font-semibold py-10">Lista de precios</h1>
+    
+    <div class="overflow-auto sm:rounded-xl shadow-md border border-gray-300 dark:border-slate-600">
+        <table class="table-auto w-full px-3 text-sm text-left dark:text-white divide-y divide-gray-300 dark:divide-slate-700">
+            <thead class="bg-gray-50 dark:bg-slate-800 font-semibold border-b-2 border-gray-200 dark:border-slate-700">
+                <tr>
+                    <th class="p-3 sm:pl-6 font-semibold tracking-wide">Producto</th>
+                    <th class="p-3 sm:py-4 font-semibold tracking-wide w-min">Precio</th>
+                    <th class="p-3 sm:pr-6 font-semibold tracking-wide w-min">Categoria</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let item of productsList" class="bg-white dark:bg-slate-800">
+                <tr class="font-normal hover:bg-gray-200 dark:hover:bg-slate-700">
+                    <td class="p-3 sm:pl-6">{{item.product}}</td>
+                    <td class="p-3 sm:py-4">${{item.price}}</td>
+                    <td class="p-3 sm:pr-6 text-gray-500 dark:text-gray-300">{{item.category}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+.alert-container--active{
+@apply block translate-x-0 opacity-100
+}
+
+.print-success{
+@apply bg-green-50 text-green-500;
+    
+    & button{
+    @apply hover:bg-green-100 focus:ring-2 focus-within:ring-inset focus-within:ring-green-600
+    }
+}
+
+.print-failed{
+@apply bg-red-50 text-red-500;
+
+    & button{
+    @apply hover:bg-red-100 focus:ring-2 focus-within:ring-inset focus-within:ring-red-600
+    }
+}

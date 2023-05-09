@@ -1,0 +1,29 @@
+<nav>
+  <div class="fixed top-0 flex border-b backdrop-blur dark:border-slate-800 h-16 w-full bg-white dark:bg-slate-900/75 px-3 sm:px-10 justify-start sm:justify-between items-center z-20">
+    <!-- Navbar estatico -->
+    <button (click)="btnNavbar()" class=" sm:hidden text-3xl mr-3 flex justify-center items-center text-neutral-400 h-10 w-10 rounded-md">
+      <i [ngClass]="['uil', icon] "></i>
+    </button>
+    <img class="h-8 w-auto" src="../../../../assets/bluesky-isologo-original.svg" alt="Bluesky">
+
+    <!-- Menu destop -->
+    <div class="h-full w-[400px] hidden sm:flex items-center">
+      <li [routerLink]="item.router" *ngFor="let item of menuOptions" class="list-none px-3 w-auto ">
+        <span class="text-neutral-800 dark:text-white p-2 px-4 rounded-lg text-base font-medium hover:bg-primary-500 dark:hover:bg-primary-700/75 hover:text-white cursor-pointer">{{item.name}}</span>   
+      </li>
+    </div>
+
+    <button (click)="toggleDarkMode()" type="button" class="text-base font-medium">
+      <span *ngIf="isDarkMode" class="dark:text-white">Modo oscuro</span>
+      <span *ngIf="!isDarkMode">Modo claro</span>
+    </button>
+  </div>
+  
+  <!-- Menu Responsive-->
+  <div class="menu-responsive absolute top-16 -translate-y-full h-screen w-full p-5 bg-white dark:bg-slate-800 opacity-0 rounded-b-md transition-all ease-in-out duration-500">
+    <li [routerLink]="item.router" *ngFor="let item of menuOptions" class="list-none py-1">
+        <span (click)="btnNavbar()" class="block text-black dark:text-white rounded-md px-3 py-2 text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-600">{{item.name}}</span>
+    </li>
+  </div>
+
+</nav> 
