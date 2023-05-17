@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup , FormControl, Validators} from '@angular/forms';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-new-invoices-page',
@@ -8,60 +10,101 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 
 export class NewInvoicesPageComponent {
-  clientForm: FormGroup;
+  invoiceForm: FormGroup = new FormGroup({});
+  invoiceData: any = {};
 
-  iconsAlert: Array<any> = [{
-    done: 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z',
-    fail: 'M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z'
-  }];
-  iconAlerState = this.iconsAlert[0]
-  showAlert: boolean = false;
-
-  alertButton(): void{
-    const alert = document.querySelector('div[name="alert-container"');
-    this.showAlert === false? (this.showAlert = !this.showAlert, alert?.classList.add('alert-container--active')):
-    (this.showAlert = !this.showAlert, alert?.classList.remove('alert-container--active'))
-  }
-
+  pdfInfo: Array<any> = [
+    {
+      icon: 'uil-map-marker',
+      dato: 'Buenos Aires 10'
+    },
+    {
+      icon: 'uil-envelope',
+      dato: 'blueskymobiles.mail@gmail.com'
+    },
+    {
+      icon: 'uil-whatsapp',
+      dato: '381-2116637'
+    },
+    {
+      icon: 'uil-instagram',
+      dato: '@blueskymobiles'
+    }
+  ];
+  
+  
   // Boton para imprimir
-  printForm(): void{
-    let printSuccess: boolean = false;
-    const pathIcon = document.querySelector('#pathIcon');
-    const alert = document.querySelector('div[name="alert-container"');
+  generatePDF(): void{
+    this.invoiceData = this.invoiceForm.getRawValue();
+    const div: any = document.querySelector("#invoice");
     
-    // Cambia los estilo segun el estado de la impresion
-    if (printSuccess){
-      pathIcon?.setAttribute('d', this.iconsAlert[0].done);
-      alert?.classList.add('print-success');
-      this.alertButton();
-    }
-    else{
-      pathIcon?.setAttribute('d', this.iconsAlert[0].fail);
-      alert?.classList.add('print-failed');
-      this.alertButton();
-    }
     
-    // this.alertButton();
-    // Si ya se quito la alerta no se la quita de nuevo
-    setTimeout(() =>{
-      if (this.showAlert){
-        this.alertButton()
-    }},5000)
+
+    const widthInPixels = 842;
+    const heightInPixels = 595;
+    const pixelsToMillimeters = 0.264583;
+
+    const widthInMillimeters = widthInPixels * pixelsToMillimeters;
+    const heightInMillimeters = heightInPixels * pixelsToMillimeters;
+    console.log(widthInMillimeters, heightInMillimeters);
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: [widthInMillimeters,heightInMillimeters]
+    });
+    
+    setTimeout(() => {
+      div?.classList.remove("hidden");
+      div?.classList.add("flex");
+      html2canvas(div, {
+        scale: 4
+      }).then((canvas)=> {
+        const img = canvas.toDataURL('image/PNG', 1.0);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        pdf.addImage(img, 'PNG', 0,0,pdfWidth,pdfHeight, undefined);
+        return pdf;
+      }).then((pdfResult)=> {
+        // pdfResult.output('dataurlnewwindow', {filename: 'invoice-1.pdf'});
+        // pdfResult.save(`${new Date().toDateString()}-invoice.pdf`);
+        // pdfResult.autoPrint();
+        window.open(pdfResult.output('bloburl'), '_blank');
+      });
+      div?.classList.remove("flex");
+      div?.classList.add("hidden");
+    },100);
+
+    // Restablece los valores del form
+    this.invoiceForm.reset();
   }
 
-  constructor() {
-    this.clientForm = new FormGroup({
-      name: new FormControl(''),
-      phone: new FormControl(''),
-      device: new FormControl(''),
-      failure: new FormControl(''),
-      report: new FormControl(''),
-      payment: new FormControl(''),
-      total: new FormControl('')
-    })
-  }
+  constructor() {}
 
-  onSubmit() {
-    console.log(this.clientForm.value);
+  ngOnInit(): void {
+    this.invoiceForm = new FormGroup(
+      {
+        name: new FormControl('a', [
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*')
+        ]),
+        numberPhone: new FormControl('1',[
+          Validators.required
+        ]),
+        deviceToRepair: new FormControl('a',[
+          Validators.required
+        ]),
+        description: new FormControl('a',[
+          Validators.required
+        ]),
+        report: new FormControl('a'),
+        payment: new FormControl('a',[
+          Validators.required
+        ]),
+        total: new FormControl('1',[
+          Validators.required,
+          Validators.pattern('[0-9]*')
+        ])
+      }
+    )
   }
 }
