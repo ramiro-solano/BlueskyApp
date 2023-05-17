@@ -83,24 +83,24 @@ export class NewInvoicesPageComponent {
   ngOnInit(): void {
     this.invoiceForm = new FormGroup(
       {
-        name: new FormControl('a', [
+        name: new FormControl('', [
           Validators.required,
           Validators.pattern('[a-zA-Z ]*')
         ]),
-        numberPhone: new FormControl('1',[
+        numberPhone: new FormControl('',[
           Validators.required
         ]),
-        deviceToRepair: new FormControl('a',[
+        deviceToRepair: new FormControl('',[
           Validators.required
         ]),
-        description: new FormControl('a',[
+        description: new FormControl('',[
           Validators.required
         ]),
-        report: new FormControl('a'),
-        payment: new FormControl('a',[
+        report: new FormControl(''),
+        payment: new FormControl('',[
           Validators.required
         ]),
-        total: new FormControl('1',[
+        total: new FormControl('',[
           Validators.required,
           Validators.pattern('[0-9]*')
         ])
