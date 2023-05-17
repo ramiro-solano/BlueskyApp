@@ -12,25 +12,9 @@ import html2canvas from 'html2canvas';
 export class NewInvoicesPageComponent {
   invoiceForm: FormGroup = new FormGroup({});
   invoiceData: any = {};
+  pdfInfo: Array<any> = [];
 
-  pdfInfo: Array<any> = [
-    {
-      icon: 'uil-map-marker',
-      dato: 'Buenos Aires 10'
-    },
-    {
-      icon: 'uil-envelope',
-      dato: 'blueskymobiles.mail@gmail.com'
-    },
-    {
-      icon: 'uil-whatsapp',
-      dato: '381-2116637'
-    },
-    {
-      icon: 'uil-instagram',
-      dato: '@blueskymobiles'
-    }
-  ];
+  
   
   
   // Boton para imprimir
@@ -38,15 +22,12 @@ export class NewInvoicesPageComponent {
     this.invoiceData = this.invoiceForm.getRawValue();
     const div: any = document.querySelector("#invoice");
     
-    
-
     const widthInPixels = 842;
     const heightInPixels = 595;
     const pixelsToMillimeters = 0.264583;
-
     const widthInMillimeters = widthInPixels * pixelsToMillimeters;
     const heightInMillimeters = heightInPixels * pixelsToMillimeters;
-    console.log(widthInMillimeters, heightInMillimeters);
+
     const pdf = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
@@ -56,6 +37,7 @@ export class NewInvoicesPageComponent {
     setTimeout(() => {
       div?.classList.remove("hidden");
       div?.classList.add("flex");
+
       html2canvas(div, {
         scale: 4
       }).then((canvas)=> {
@@ -66,9 +48,29 @@ export class NewInvoicesPageComponent {
         return pdf;
       }).then((pdfResult)=> {
         // pdfResult.output('dataurlnewwindow', {filename: 'invoice-1.pdf'});
+        pdfResult.autoPrint();
+
+        const hiddFrame: any = document.createElement('iframe');
+        hiddFrame.style.position = 'fixed';
+        hiddFrame.style.width = '1px';
+        hiddFrame.style.height = '1px';
+        hiddFrame.style.opacity = '0.01';
+        const isSafari = /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+        if (isSafari) {
+          // fallback in safari
+          hiddFrame.onload = () => {
+            try {
+              hiddFrame.contentWindow.document.execCommand('print', false, null);
+            } catch (e) {
+              hiddFrame.contentWindow.print();
+            }
+          };
+        }
+        hiddFrame.src = pdfResult.output('bloburl');
+        document.body.appendChild(hiddFrame);
+
         // pdfResult.save(`${new Date().toDateString()}-invoice.pdf`);
-        // pdfResult.autoPrint();
-        window.open(pdfResult.output('bloburl'), '_blank');
+        // window.open(pdfResult.output('bloburl'), '_blank');
       });
       div?.classList.remove("flex");
       div?.classList.add("hidden");
@@ -105,6 +107,25 @@ export class NewInvoicesPageComponent {
           Validators.pattern('[0-9]*')
         ])
       }
-    )
+    );
+
+    this.pdfInfo = [
+      {
+        icon: 'uil-map-marker',
+        dato: 'Buenos Aires 10'
+      },
+      {
+        icon: 'uil-envelope',
+        dato: 'blueskymobiles.mail@gmail.com'
+      },
+      {
+        icon: 'uil-whatsapp',
+        dato: '381-2116637'
+      },
+      {
+        icon: 'uil-instagram',
+        dato: '@blueskymobiles'
+      }
+    ];
   }
 }
