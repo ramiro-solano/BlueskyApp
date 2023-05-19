@@ -13,6 +13,7 @@ export class NavBarComponent implements OnInit {
   menuButton: boolean = false;
   icon = this.iconButtons[0]
 
+  //Menu responsive
   btnNavbar(): void {
     const menu = document.querySelector('.menu-responsive');
     this.menuButton === false? 

@@ -80,6 +80,10 @@ export class NewInvoicesPageComponent {
     this.invoiceForm.reset();
   }
 
+  resetForm(): void {
+    this.invoiceForm.reset();
+  }
+
   constructor() {}
 
   ngOnInit(): void {

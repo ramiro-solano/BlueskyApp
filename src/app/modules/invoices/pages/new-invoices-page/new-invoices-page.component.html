@@ -1,14 +1,14 @@
-<div class="h-auto w-full sm:px-10 lg:grid lg:auto-rows-max lg:grid-cols-3 sm:py-10 lg:gap-8">
-  <section class="p-4 w-full sm:max-w-sm">
+<div class="min-h-screen w-full sm:px-10 lg:grid lg:auto-rows-max lg:grid-cols-3 sm:py-10 lg:gap-8">
+  <section class="p-4 w-full sm:max-w-sm sm:px-0">
     <h1 class="text-base font-semibold dark:text-white">
       Facturacion
     </h1>
     <p class="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-400 col-auto">
-      This information will be displayed publicly so be careful what you share. Servicios tecnicos y reparaciones.
+      Para servicios tecnicos y reparaciones. No olvidar colocar el codigo de bloqueo.
     </p>
   </section>
   
-  <form [formGroup]="invoiceForm" class="w-full p-4 h-auto sm:p-8 bg-white dark:bg-slate-800 sm:rounded-xl sm:border dark:border-slate-700 sm:col-span-2 pb-10">
+  <form [formGroup]="invoiceForm" class="w-full p-4 h-auto sm:p-8 bg-white shadow-md dark:bg-slate-800 sm:rounded-xl sm:border dark:border-slate-700 sm:col-span-2 pb-10">
     <div class="grid grid-rows-1 sm:grid-cols-4 sm:gap-x-3 gap-y-8">
       <div class="sm:col-span-full">
         <label class=" text-gray-900 dark:text-white leading-6 font-medium text-sm">Nombre y Apellido</label>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="mt-10 flex flex-col-reverse sm:flex-row justify-end items-center">
-      <button type="button" class="px-3 py-2 dark:text-white">Cancelar</button>
+      <button (click)="resetForm()" type="button" class="px-3 py-2 dark:text-white">Cancelar</button>
       <button type="button" [disabled]="invoiceForm.invalid" (click)="generatePDF()" class=" w-full sm:w-auto px-3 py-2 sm:ml-3 rounded-md bg-primary-600 hover:bg-primary-500 text-white">Imprimir</button>
     </div>
   </form>
@@ -70,7 +70,7 @@
 
 
 
-<div id="invoice" class="w-[842px] h-[595px] bg-slate-100 hidden">
+<div id="invoice" class="w-[842px] h-[595px] hidden">
   <section class="w-[421px] h-full border-r-[1px] border-dashed border-gray-600 p-5">
     <div class="w-[380px] min-h-[555px] relative">
       <div class="flex justify-between text-xs">
@@ -116,7 +116,7 @@
             </tr>
             <tr>
               <th>Forma de pago</th>
-              <td>{{ invoiceData.payment }}</td>
+              <td class="capitalize">{{ invoiceData.payment }}</td>
             </tr>
           </tbody>
         </table>
@@ -179,7 +179,7 @@
             </tr>
             <tr>
               <th>Forma de pago</th>
-              <td>{{ invoiceData.payment }}</td>
+              <td class="capitalize">{{ invoiceData.payment }}</td>
             </tr>
           </tbody>
         </table>
